@@ -37,8 +37,8 @@ public class BasicItemController {
         return "basic/addForm";
     }
 
-    @PostMapping("/add")
-    public String save(@RequestParam String itemName,
+   // @PostMapping("/add")
+    public String addItemV1(@RequestParam String itemName,
                        @RequestParam int price,
                        @RequestParam Integer quantity,
                        Model model) {
@@ -50,6 +50,37 @@ public class BasicItemController {
         itemRepository.save(item);
 
         model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+//    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item, Model model) {
+
+        itemRepository.save(item);
+
+    //    model.addAttribute("item", item); // 자동 추가, 생략 가능
+
+        return "basic/item";
+    }
+
+//    @PostMapping("/add")
+    public String addItemV3(@ModelAttribute Item item) {
+
+        itemRepository.save(item);
+
+        //    model.addAttribute("item", item); // 자동 추가, 생략 가능
+
+        return "basic/item";
+    }
+
+
+    @PostMapping("/add")
+    public String addItemV4(Item item) {
+    // String, int, Integer등의 단순타입에서는 @RequestParam이 적용되고, 나머지 타입들은 @ModelAttribute가 적용
+        itemRepository.save(item);
+
+        //    model.addAttribute("item", item); // 자동 추가, 생략 가능
 
         return "basic/item";
     }
